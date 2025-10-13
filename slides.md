@@ -2,29 +2,43 @@
 theme: default
 ---
 <script setup>
-import Footer from './components/Footer.vue'
+import Footer from './components/Footer.vue';
+import FooterImage from './components/FooterImage.vue'
 </script>
 
 
 # Javascript fait du bruit (mais en rythme)
 
-## Tremplin de Snowcamp
+## Tremplin de Snowcamp 2026 : UX & Frontend
 
 **Baptiste Lyet**
 
 coaché par **Sylvain Coudert**
 
+<FooterImage />
 ---
 
 # Plan
 
 - Introduction
+   - Pourquoi ce talk au tremplin ?
    - Musique et rythme
    - Séquenceurs et boites à rythmes
-- Création d'un séquenceur en JavaScript
-  - Utilisation du timing JavaScript
-  - Utilisation de la WebAudioAPI et de la synchronisation d'horloges
+- Création d'une boîte à rythme
+  - Problématique
+  - Simpliste
+  - Précise
 - Conclusion
+
+<Footer />
+---
+
+# Introduction
+Pourquoi ce talk au tremplin ?
+
+- Développeur + musicien
+- Participation à Snowcamp en tant que spectateur à 2 reprises
+- Sylvain et Punkindev
 
 <Footer />
 ---
@@ -34,9 +48,13 @@ Musique et rythme
 
 ### Qu'est ce que la musique ?
 
-La musique est un art et une activité culturelle consistant à **combiner sons et silences au cours du temps**.
+Combiner sons et silences au cours du temps.
 
-Les paramètres principaux sont le **rythme** (façon de combiner les sons dans le temps), la hauteur (combinaison dans les fréquences), les nuances et le timbre.
+Paramètres principaux : 
+- **rythme**
+- hauteur
+- nuances
+- timbre
 
 <!--
 Définitions de wikipedia
@@ -67,11 +85,37 @@ backgroundSize: 90%
 #  Introduction
 Séquenceurs et boîte à rythme
 
+- Ableton
+- FLStudio
+- Jeu vidéo
+
 <Footer />
 ---
+layout: image-right
+image: 8beat_example.jpg
+backgroundSize: 90%
+---
 
-# Construction d'une boite à rythme simpliste
-Horloge JavaScript
+# Construction d'une boite à rythme
+Problématique
+
+- Pas minimal entre deux notes : quart de croche
+  - 117ms à un tempo de 128
+  - 75ms à un tempo de 200
+- Besoin de précision
+- Modelisation 
+
+```json
+"hihat" : ["X", "X", "X", "X", "X", "X", "X", "X"],
+"snare" : [" ", " ", "X", " ", " ", "X", " ", " "],
+"kick"  : ["X", " ", " ", "X", "X", " ", " ", "X"]
+```
+
+
+---
+
+# Construction d'une boite à rythme
+Simpliste - Horloge JavaScript
 
 ## Code
 ```ts
@@ -97,16 +141,16 @@ let step: number = 0;
 <Footer />
 ---
 
-# Construction d'une boite à rythme simpliste
-Horloge JavaScript
+# Construction d'une boite à rythme
+Simpliste - Horloge JavaScript
 
 ## Démonstration
 
 <Footer />
 ---
 
-# Construction d'une boite à rythme simpliste
-Horloge JavaScript
+# Construction d'une boite à rythme
+Simpliste - Horloge JavaScript
 
 ## Inconvénients
 - Précision à la milliseconde
@@ -119,8 +163,8 @@ Horloge JavaScript
 <Footer />
 ---
 
-# Construction d'une boite à rythme précise
-Synchronisation d'horloges
+# Construction d'une boite à rythme
+Précise - Synchronisation d'horloges
 
 ## A Tales of two clock - Chris Wilson - 2013
 
