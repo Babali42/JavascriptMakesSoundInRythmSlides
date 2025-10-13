@@ -1,16 +1,24 @@
+---
+theme: default
+---
+<script setup>
+import Footer from './components/Footer.vue'
+</script>
+
+
 # Javascript fait du bruit (mais en rythme)
 
 ## Tremplin de Snowcamp
 
-neo speaker : Baptiste Lyet
+**Baptiste Lyet**
 
-coach : Sylvain Coudert
+coaché par **Sylvain Coudert**
 
 ---
 
 # Plan
 
-- Intro
+- Introduction
    - Musique et rythme
    - Séquenceurs et boites à rythmes
 - Création d'un séquenceur en JavaScript
@@ -18,9 +26,10 @@ coach : Sylvain Coudert
   - Utilisation de la WebAudioAPI et de la synchronisation d'horloges
 - Conclusion
 
+<Footer />
 ---
 
-# Intro
+# Introduction
 Musique et rythme
 
 ### Qu'est ce que la musique ?
@@ -29,33 +38,36 @@ La musique est un art et une activité culturelle consistant à **combiner sons 
 
 Les paramètres principaux sont le **rythme** (façon de combiner les sons dans le temps), la hauteur (combinaison dans les fréquences), les nuances et le timbre.
 
-### Qu'est ce que le rythme ?
-
-Le rythme en musique est l'organisation dans le temps des événements musicaux.
-
 <!--
 Définitions de wikipedia
 https://fr.wikipedia.org/wiki/Rythme_(musique)
 https://fr.wikipedia.org/wiki/Musique
 -->
-
+<Footer />
+---
+layout: image-right
+image: 8beat_example.jpg
+backgroundSize: 90%
 ---
 
-#  Intro
-Musique électronique : séquenceurs et boites à rythmes
+#  Introduction
+Musique et rythme
 
-Image orgue de barbarie
+### Qu'est ce que le rythme ?
 
-Rythme encore créé par un.e humain mais on voit les motifs apparaitres
+Le rythme en musique est l'organisation dans le temps des événements musicaux.
 
-Image séquenceur
+<Footer />
+---
+layout: image-right
+image: 8beat_example.jpg
+backgroundSize: 90%
+---
 
-Image guitar hero
+#  Introduction
+Séquenceurs et boîte à rythme
 
-Image logiciel de musique
-
-<!-- https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Orgue_de_barbarie.jpg/2880px-Orgue_de_barbarie.jpg -->
-
+<Footer />
 ---
 
 # Construction d'une boite à rythme simpliste
@@ -82,6 +94,7 @@ let step: number = 0;
 })();
 ```
 
+<Footer />
 ---
 
 # Construction d'une boite à rythme simpliste
@@ -89,6 +102,7 @@ Horloge JavaScript
 
 ## Démonstration
 
+<Footer />
 ---
 
 # Construction d'une boite à rythme simpliste
@@ -96,28 +110,46 @@ Horloge JavaScript
 
 ## Inconvénients
 - Précision à la milliseconde
+  - Relativement peu précis pour de l'audio
 - Horloge JavaScript qui dépend beaucoup de ce qui se passe sur le thread JavaScript principale
   - UI
   - Garbage collector
-- Pas utilisable pour des applications audios complexes
+- Conséquence : Pas utilisable pour des applications audios complexes
 
-## Solution
-So what can we do? Well, the best way to handle timing is to set up a collaboration between JavaScript timers (setTimeout(), setInterval() or requestAnimationFrame()
-- more on that later) and the audio hardware scheduling.
-
----
-layout: image-right
-
-# the image source
-image: /settimeout-audio-event-4e03219617f57_1920.png
-imageFit: contain
-imagePosition: center
-imageWidth: 60%   # adjust how wide the image area is
+<Footer />
 ---
 
 # Construction d'une boite à rythme précise
 Synchronisation d'horloges
 
+## A Tales of two clock - Chris Wilson - 2013
+
+Document de référence qui introduit le concept
+
+## JS --- WebAudioAPI
+- horloge JavaScript
+  - setTimeout()
+  - setInterval()
+- hardware audio
+  - WebAudioAPI
+  - context.currentTime()
+
+<Footer />
+---
+layout: image
+
+image: /settimeout-audio-event-4e03219617f57_1920.png
+backgroundSize: 50%
+---
+# Construction d'une boite à rythme précise
+
+<Footer />
+---
+
+# Construction d'une boite à rythme précise
+Code
+
+<Footer />
 ---
 
 # Conclusion
@@ -132,6 +164,7 @@ Solution :
 
 Cette solution est utilisée dans de nombreuses applications web
 
+<Footer />
 ---
 
 # Conclusion
@@ -140,4 +173,7 @@ Ouverture
 - Synchronisation avec l'UI :
   - Utilisation d'une troisième horloge avec requestAnimationFrame()
 - Changement de tempo :
-  - TimeStrech
+  - TimeStretch
+
+<Footer />
+---
