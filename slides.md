@@ -37,7 +37,7 @@ coaché par **Sylvain Coudert**
 Pourquoi ce talk au tremplin ?
 
 - Développeur + musicien
-- Participation à Snowcamp en tant que spectateur à 2 reprises
+- Participation à Snowcamp en tant que spectateur
 - Sylvain et Punkindev
 
 <Footer />
@@ -78,15 +78,16 @@ Le rythme en musique est l'organisation dans le temps des événements musicaux.
 <Footer />
 ---
 layout: image-right
-image: 8beat_example.jpg
+image: TR08.avif
 backgroundSize: 90%
 ---
 
 #  Introduction
 Séquenceurs et boîte à rythme
 
-- Ableton
-- FLStudio
+**Boîte à rythme** : Machine ou logiciel qui génère des boucles de batterie/percussions répétitives et utilise en interne un **séquenceur**
+
+- DAW
 - Jeu vidéo
 
 <Footer />
@@ -111,7 +112,29 @@ Problématique
 "kick"  : ["X", " ", " ", "X", "X", " ", " ", "X"]
 ```
 
+<Footer />
+---
+layout: image-right
+image: JSClockDelay.png
+backgroundSize: 50%
+---
 
+# Construction d'une boite à rythme
+Simpliste - Horloge JavaScript
+
+## SetTimeout()
+- permet de déclencher une fonction après un certain temps
+- davantage utilisé que SetInterval() qui elle est répétitive
+
+```javascript
+function repeat() {
+  console.log("Runs every ~2 seconds");
+  setTimeout(repeat, 2000);
+}
+repeat();
+```
+
+<Footer />
 ---
 
 # Construction d'une boite à rythme
@@ -145,6 +168,14 @@ let step: number = 0;
 Simpliste - Horloge JavaScript
 
 ## Démonstration
+<SlidevVideo v-click autoplay controls>
+  <!-- Anything that can go in an HTML video element. -->
+  <source src="/videos/lag.mov" type="video/mp4" />
+  <p>
+    Your browser does not support videos. You may download it
+    <a href="/myMovie.mp4">here</a>.
+  </p>
+</SlidevVideo>
 
 <Footer />
 ---
@@ -166,11 +197,11 @@ Simpliste - Horloge JavaScript
 # Construction d'une boite à rythme
 Précise - Synchronisation d'horloges
 
-## A Tales of two clock - Chris Wilson - 2013
+💡 Au lieu de déclencher les sons au dernier moment, on planifie les événements à l’avance.
 
-Document de référence qui introduit le concept
+📖 A Tales of two clock - Chris Wilson - 2013
 
-## JS --- WebAudioAPI
+## Synchronisation JS & WebAudioAPI
 - horloge JavaScript
   - setTimeout()
   - setInterval()
@@ -184,10 +215,6 @@ layout: image
 
 image: /settimeout-audio-event-4e03219617f57_1920.png
 backgroundSize: 50%
----
-# Construction d'une boite à rythme précise
-
-<Footer />
 ---
 
 # Construction d'une boite à rythme précise
@@ -214,10 +241,9 @@ Cette solution est utilisée dans de nombreuses applications web
 # Conclusion
 Ouverture
 
-- Synchronisation avec l'UI :
-  - Utilisation d'une troisième horloge avec requestAnimationFrame()
-- Changement de tempo :
-  - TimeStretch
+Synchronisation avec l'UI : utilisation d'une troisième horloge avec **requestAnimationFrame()**
+
+Changement de tempo et **TimeStretch**
 
 <Footer />
 ---
