@@ -25,11 +25,16 @@ Musique et rythme
 
 Combiner sons et silences au cours du temps.
 
-Paramètres principaux : 
+
+<v-click>
+
 - **rythme**
 - hauteur
 - nuances
 - timbre
+
+</v-click>
+
 
 <!--
 Définitions de wikipedia
@@ -58,12 +63,28 @@ backgroundSize: 90%
 ---
 
 # Définitions
-Séquenceurs et boîte à rythme
+Séquenceurs et boite à rythme
 
-**Boîte à rythme** : Machine ou logiciel qui génère des boucles de batterie/percussions répétitives et utilise en interne un **séquenceur**
+### Boite à rythme / Drum Machine
+Machine ou logiciel qui génère des boucles de batterie/percussions répétitives et utilise en interne un **séquenceur**
 
-- DAW
-- Jeu vidéo
+### Usages
+
+- Musique assistée par ordinateur
+- Jeux vidéos
+
+---
+
+# Pourquoi parler de rythme en JavaScript ? 🥁
+
+<v-clicks>
+
+- En musique comme en **frontend**, tout dépend de la **synchronisation**
+- Les UIs modernes réagissent en temps réel : **animations**, **streams**, **events**
+- Avec **RxJS** ou la **programmation réactive**, on orchestre les événements  
+  👉 comme une **partition musicale** : chaque action doit tomber juste.
+
+</v-clicks>
 
 <Footer />
 ---
@@ -75,14 +96,14 @@ backgroundSize: 50%
 # Construction d'une boite à rythme
 Problématique
 
-## Schéma rythmique
+### Schéma rythmique
 ```json
 "hihat" : ["X", " ", "X", " ", "X", " ", "X", " "],
 "snare" : [" ", " ", " ", " ", "X", " ", " ", " "],
 "kick"  : ["X", " ", " ", " ", " ", " ", "X", " "]
 ```
 
-## Vitesse de lecture
+### Vitesse de lecture
 - n ms pour passer d'une case à l'autre
 - avec n > 75ms et n < 150ms
 
@@ -90,7 +111,7 @@ Problématique
 ---
 
 # Construction d'une boite à rythme
-Simpliste - minuteur JavaScript
+Version naïve : minuteur JS
 
 ## SetTimeout()
 - permet de déclencher une fonction après un certain temps
@@ -115,7 +136,7 @@ console.log("End");
 ---
 
 # Construction d'une boite à rythme
-Simpliste - minuteur JavaScript
+Version naïve : minuteur JS
 
 ## SetTimeout()
 - Appel récursif
@@ -142,9 +163,8 @@ loop()
 ---
 
 # Construction d'une boite à rythme
-Simpliste - minuteur JavaScript
+Version naïve : minuteur JS
 
-## Code
 ```ts
 const pattern: string[] = ["X"," "," "," ","X"," "," "," ","X"," "," "," ","X"," "," "," "];
 const audio: HTMLAudioElement = new Audio("kick.wav");
@@ -171,9 +191,8 @@ loop();
 ---
 
 # Construction d'une boite à rythme
-Simpliste - minuteur JavaScript
+Version naïve : minuteur JS - Démo
 
-## Démonstration
 <SlidevVideo v-click autoplay controls>
   <!-- Anything that can go in an HTML video element. -->
   <source src="/videos/lag.mov" type="video/mp4" />
@@ -187,7 +206,7 @@ Simpliste - minuteur JavaScript
 ---
 
 # Construction d'une boite à rythme
-Simpliste - minuteur JavaScript
+Version naïve : minuteur JS
 
 ## Inconvénients
 - Précision à la milliseconde
@@ -201,7 +220,7 @@ Simpliste - minuteur JavaScript
 ---
 
 # Construction d'une boite à rythme
-Précise - Synchronisation d'horloges
+Version synchronisée : WebAudioAPI
 
 💡 Au lieu de déclencher les sons au dernier moment, on planifie les événements à l’avance.
 
@@ -227,9 +246,8 @@ Code
 ---
 
 # Construction d'une boite à rythme
-Précis - Synchronisation d'horloges
+Version synchronisée : WebAudioAPI - Démo
 
-## Démonstration
 <SlidevVideo v-click autoplay controls>
   <!-- Anything that can go in an HTML video element. -->
   <source src="/videos/good.mov" type="video/mp4" />
@@ -243,31 +261,40 @@ Précis - Synchronisation d'horloges
 ---
 
 # Conclusion
-Résumé
+_
 
-Notions :
-- timer
-- horloges
+### Notions
+- minuteur / timer
+- horloges / clock
 
-Solution :
-- synchronisation d'horloge JavaScript avec horloges tierces (WebAudioAPI)
+<v-click>
 
-Cette solution est utilisée dans de nombreuses applications web
+### Solution
+- synchronisation d'horloge JavaScript avec horloge tierce (WebAudioAPI)
+
+</v-click>
+
+<v-click>
+
+### Aller plus loin
+- UI - **requestAnimationFrame()**
+- Changement de tempo et **TimeStretch**
+
+</v-click>
 
 <Footer />
 ---
 
-# Conclusion
-Ouverture
+# Sources
+_
 
-Synchronisation avec l'UI : utilisation d'une troisième horloge avec **requestAnimationFrame()**
+📖 SetTimeout() : https://developer.mozilla.org/fr/docs/Web/API/Window/setTimeout
 
-Changement de tempo et **TimeStretch**
+📖 A Tales of two clock - Chris Wilson - 2013 : https://web.dev/articles/audio-scheduling
+
+🖼️ Roland 808 - 1980 : https://www.roland.com/fr/products/tr-08/
+
+</> DrumBeatRepo : https://www.github.com/babali42/drumbeatrepo
 
 <Footer />
 ---
-
-# Ressources
-- MDN SetTimeout() : https://developer.mozilla.org/fr/docs/Web/API/Window/setTimeout
-- 📖 A Tales of two clock - Chris Wilson - 2013 : https://web.dev/articles/audio-scheduling
-- www.github.com/babali42/drumbeatrepo
