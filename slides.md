@@ -18,32 +18,7 @@ coaché par **Sylvain Coudert**
 <FooterImage />
 ---
 
-# Plan
-
-- Introduction
-   - Pourquoi ce talk au tremplin ?
-   - Musique et rythme
-   - Séquenceurs et boites à rythmes
-- Création d'une boîte à rythme
-  - Problématique
-  - Simpliste
-  - Précise
-- Conclusion
-
-<Footer />
----
-
-# Introduction
-Pourquoi ce talk au tremplin ?
-
-- Développeur + musicien
-- Participation à Snowcamp en tant que spectateur
-- Sylvain et Punkindev
-
-<Footer />
----
-
-# Introduction
+# Définitions
 Musique et rythme
 
 ### Qu'est ce que la musique ?
@@ -65,10 +40,10 @@ https://fr.wikipedia.org/wiki/Musique
 ---
 layout: image-right
 image: 8beat_example.jpg
-backgroundSize: 90%
+backgroundSize: 50%
 ---
 
-#  Introduction
+# Définitions
 Musique et rythme
 
 ### Qu'est ce que le rythme ?
@@ -82,7 +57,7 @@ image: TR08.avif
 backgroundSize: 90%
 ---
 
-#  Introduction
+# Définitions
 Séquenceurs et boîte à rythme
 
 **Boîte à rythme** : Machine ou logiciel qui génère des boucles de batterie/percussions répétitives et utilise en interne un **séquenceur**
@@ -94,51 +69,80 @@ Séquenceurs et boîte à rythme
 ---
 layout: image-right
 image: 8beat_example.jpg
-backgroundSize: 90%
+backgroundSize: 50%
 ---
 
 # Construction d'une boite à rythme
 Problématique
 
-- Pas minimal entre deux notes : quart de croche
-  - 117ms à un tempo de 128
-  - 75ms à un tempo de 200
-- Besoin de précision
-- Modelisation 
-
+## Schéma rythmique
 ```json
-"hihat" : ["X", "X", "X", "X", "X", "X", "X", "X"],
-"snare" : [" ", " ", "X", " ", " ", "X", " ", " "],
-"kick"  : ["X", " ", " ", "X", "X", " ", " ", "X"]
+"hihat" : ["X", " ", "X", " ", "X", " ", "X", " "],
+"snare" : [" ", " ", " ", " ", "X", " ", " ", " "],
+"kick"  : ["X", " ", " ", " ", " ", " ", "X", " "]
 ```
+
+## Vitesse de lecture
+- n ms pour passer d'une case à l'autre
+- avec n > 75ms et n < 150ms
 
 <Footer />
 ---
-layout: image-right
-image: JSClockDelay.png
-backgroundSize: 50%
----
 
 # Construction d'une boite à rythme
-Simpliste - Horloge JavaScript
+Simpliste - minuteur JavaScript
 
 ## SetTimeout()
 - permet de déclencher une fonction après un certain temps
-- davantage utilisé que SetInterval() qui elle est répétitive
 
 ```javascript
-function repeat() {
-  console.log("Runs every ~2 seconds");
-  setTimeout(repeat, 2000);
+function loop(){
+    console.log("Sample is played");
 }
-repeat();
+
+console.log("Start");
+setTimeout(loop, 75);
+console.log("End");
+```
+
+```
+> Start
+> End
+> Sample is played
 ```
 
 <Footer />
 ---
 
 # Construction d'une boite à rythme
-Simpliste - Horloge JavaScript
+Simpliste - minuteur JavaScript
+
+## SetTimeout()
+- Appel récursif
+  - permet de déclencher une fonction à interval de temps régulier
+
+```javascript
+function loop(){
+    console.log("Sample is played");
+    setTimeout(loop, 75);
+}
+
+loop()
+```
+
+```
+> Sample is played
+> Sample is played
+> Sample is played
+> ...
+```
+
+
+<Footer />
+---
+
+# Construction d'une boite à rythme
+Simpliste - minuteur JavaScript
 
 ## Code
 ```ts
@@ -150,7 +154,7 @@ const stepTime: number = (60 / bpm) / 4 * 1000; // duration of a 16th note in ms
 
 let step: number = 0;
 
-(function loop(): void {
+function loop(): void {
   if (pattern[step] === "X") {
     audio.currentTime = 0;
     audio.play();
@@ -158,14 +162,16 @@ let step: number = 0;
 
   step = (step + 1) % pattern.length;
   setTimeout(loop, stepTime);
-})();
+}
+
+loop();
 ```
 
 <Footer />
 ---
 
 # Construction d'une boite à rythme
-Simpliste - Horloge JavaScript
+Simpliste - minuteur JavaScript
 
 ## Démonstration
 <SlidevVideo v-click autoplay controls>
@@ -181,15 +187,15 @@ Simpliste - Horloge JavaScript
 ---
 
 # Construction d'une boite à rythme
-Simpliste - Horloge JavaScript
+Simpliste - minuteur JavaScript
 
 ## Inconvénients
 - Précision à la milliseconde
-  - Relativement peu précis pour de l'audio
-- Horloge JavaScript qui dépend beaucoup de ce qui se passe sur le thread JavaScript principale
+  - peu précis pour de l'audio
+- Interférences avec thread JavaScript principal
   - UI
   - Garbage collector
-- Conséquence : Pas utilisable pour des applications audios complexes
+- Non utilisable pour des applications complexes
 
 <Footer />
 ---
@@ -199,12 +205,9 @@ Précise - Synchronisation d'horloges
 
 💡 Au lieu de déclencher les sons au dernier moment, on planifie les événements à l’avance.
 
-📖 A Tales of two clock - Chris Wilson - 2013
-
 ## Synchronisation JS & WebAudioAPI
 - horloge JavaScript
   - setTimeout()
-  - setInterval()
 - hardware audio
   - WebAudioAPI
   - context.currentTime()
@@ -263,3 +266,8 @@ Changement de tempo et **TimeStretch**
 
 <Footer />
 ---
+
+# Ressources
+- MDN SetTimeout() : https://developer.mozilla.org/fr/docs/Web/API/Window/setTimeout
+- 📖 A Tales of two clock - Chris Wilson - 2013 : https://web.dev/articles/audio-scheduling
+- www.github.com/babali42/drumbeatrepo
