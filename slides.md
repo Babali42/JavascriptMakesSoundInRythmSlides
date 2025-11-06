@@ -1,5 +1,10 @@
 ---
-theme: default
+theme: meetup
+layout: intro
+lineNumbers: false
+themeConfig:
+  title: Javascript fait du bruit... ...mais en rythme
+  github: babali42/drumbeatrepo
 ---
 <script setup>
 import Footer from './components/Footer.vue';
