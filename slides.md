@@ -6,10 +6,6 @@ themeConfig:
   title: Javascript fait du bruit... ...mais en rythme
   github: babali42/drumbeatrepo
 ---
-<script setup>
-import FooterImage from './components/FooterImage.vue'
-</script>
-
 
 # Javascript fait du bruit (mais en rythme)
 
@@ -20,6 +16,11 @@ import FooterImage from './components/FooterImage.vue'
 ---
 
 # Plan
+
+- Définitions
+- Construction d'une boîte à rythme naïve
+- Construction d'une boîte à rythme précise
+- Synchronisation avec les interfaces graphiques
 
 
 ---
@@ -65,39 +66,26 @@ Le rythme en musique est l'organisation dans le temps des événements musicaux.
 </div>
 
 ---
-layout: image-right
-image: TR08.avif
-backgroundSize: 90%
----
 
 # Définitions
 Séquenceurs et boite à rythme
 
 ### Boite à rythme / Drum Machine
-Machine ou logiciel qui génère des boucles de batterie/percussions répétitives et utilise en interne un **séquenceur**
+
+<img src="./TR08.avif" class="max-w-100 h-auto rounded-lg shadow-lg object-contain" />
 
 ### Usages
 
 - Musique assistée par ordinateur
 - Jeux vidéos
 
----
-
-# Pourquoi parler de rythme en JavaScript ? 🥁
-
-<v-clicks>
-
+<!--
+Machine ou logiciel qui génère des boucles de batterie/percussions répétitives et utilise en interne un **séquenceur**
 - En musique comme en **frontend**, tout dépend de la **synchronisation**
 - Les UIs modernes réagissent en temps réel : **animations**, **streams**, **events**
 - Avec **RxJS** ou la **programmation réactive**, on orchestre les événements  
   👉 comme une **partition musicale** : chaque action doit tomber juste.
-
-</v-clicks>
-
----
-layout: image-right
-image: 8beat_example.jpg
-backgroundSize: 50%
+-->
 ---
 
 # Construction d'une boite à rythme
@@ -105,15 +93,14 @@ Problématique
 
 ### Schéma rythmique
 ```json
-"hihat" : ["X", " ", "X", " ", "X", " ", "X", " "],
-"snare" : [" ", " ", " ", " ", "X", " ", " ", " "],
-"kick"  : ["X", " ", " ", " ", " ", " ", "X", " "]
+"hihat" : [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+"snare" : [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+"kick"  : ["X", " ", " ", " ", "X", " ", " ", " ", "X", " ", " ", " ", "X", " ", " ", " "]
 ```
 
 ### Vitesse de lecture
-- n ms pour passer d'une case à l'autre
+- 85 ms pour passer d'une case à l'autre avec un tempo de 176
 - https://toolstud.io/music/bpm.php?bpm=176&bpm_unit=4%2F4&base=16
-- avec n > 75ms et n < 150ms
 
 ---
 
@@ -121,24 +108,27 @@ Problématique
 Version naïve : minuteur JS
 
 ## SetTimeout()
-- permet de déclencher une fonction après un certain temps
+- déclenche une fonction après un certain temps
 
 ```javascript
 function loop(){
-    console.log("Sample is played");
+    console.log("Case suivante");
 }
 
-console.log("Start");
-setTimeout(loop, 75);
-console.log("End");
+console.log("Début");
+setTimeout(loop, 85);
+console.log("Fin");
 ```
 
 ```
-> Start
-> End
-> Sample is played
+> Début
+> Fin
+> Case suivante
 ```
 
+<!--
+permet de déclencher une fonction après un certain temps
+-->
 ---
 
 # Construction d'une boite à rythme
@@ -150,20 +140,27 @@ Version naïve : minuteur JS
 
 ```javascript
 function loop(){
-    console.log("Sample is played");
-    setTimeout(loop, 75);
+    console.log("Case suivante");
+    setTimeout(loop, 85);
 }
 
 loop()
 ```
 
 ```
-> Sample is played
-> Sample is played
-> Sample is played
+> Case suivante
+> Case suivante
+> Case suivante
 > ...
 ```
+<!--
+J'ai fouillé dans la documentation JS et j'ai vu qu'il y a une fonction pour déclencher un évènement après un temps précis
+SetInterval()
 
+Ensuite j'ai vu des débats et beaucoup d'utilisation de SetTimeout() en récursif
+
+De toute façon le récursif ça ne me fait pas peur je fonce
+-->
 
 ---
 
@@ -171,13 +168,11 @@ loop()
 Version naïve : minuteur JS
 
 ```ts
-const pattern: string[] = ["X"," "," "," ","X"," "," "," ","X"," "," "," ","X"," "," "," "];
-const audio: HTMLAudioElement = new Audio("kick.wav");
+const pattern = ["X"," "," "," ","X"," "," "," ","X"," "," "," ","X"," "," "," "];
+const audio = new Audio("kick.wav");
 
-const bpm: number = 120;
-const stepTime: number = (60 / bpm) / 4 * 1000; // duration of a 16th note in ms
-
-let step: number = 0;
+const stepTime = 85;
+let step = 0;
 
 function loop(): void {
   if (pattern[step] === "X") {
@@ -211,13 +206,29 @@ Version naïve : minuteur JS - Démo
 # Construction d'une boite à rythme
 Version naïve : minuteur JS
 
+```mermaid
+gantt
+    dateFormat  HH:mm:ss
+    axisFormat  %S.%L s
+
+    section Sans surcharge processeur
+    1 : vert, v1, 00:00:00, 0.000s
+    setTimeout :active, des1, after v1, 0.085s
+    2 : vert, v2, after des1, 0.000s
+    setTimeout :des2, after des1, 0.085s
+    3 : vert, v3, after des2, 0.000s
+    setTimeout :des3, after des2, 0.085s
+    4 : vert, v4, after des3, 0.000s
+
+    section Avec surcharge processeur
+    setTimeout :active, des4, 00:00:00, 0.085s
+    setTimeout retardé :crit, des5, after des4, 0.105s
+    setTimeout :crit, des6, after des5, 0.085s
+```
+
 ## Inconvénients
 - Précision à la milliseconde
-  - peu précis pour de l'audio
 - Interférences avec thread JavaScript principal
-  - UI
-  - Garbage collector
-- Non utilisable pour des applications complexes
 
 ---
 
@@ -234,10 +245,28 @@ Version synchronisée : WebAudioAPI
   - context.currentTime()
 
 ---
-layout: image
 
-image: /settimeout-audio-event-4e03219617f57_1920.png
-backgroundSize: 50%
+# Construction d'une boite à rythme précise
+```mermaid
+sequenceDiagram
+    autonumber
+    participant JS as JavaScript Timer
+    participant Scheduler as scheduler()
+    participant Audio as AudioContext
+    participant Speaker as Output
+    
+    JS->>Scheduler: Tick (every 25ms)
+    Scheduler->>Audio: Check nextNoteTime < currentTime + lookahead
+    alt Time to schedule
+        Scheduler->>Audio: scheduleNote(currentNote, nextNoteTime)
+        Audio->>Speaker: Play click at nextNoteTime
+        Scheduler->>Scheduler: nextNoteTime += beatDuration currentNote+= 1
+    else Not yet
+        Scheduler-->>JS: Wait for next tick
+    end
+    JS->>Scheduler: Next Tick
+```
+
 ---
 
 # Construction d'une boite à rythme précise
@@ -294,7 +323,11 @@ _
 
 </> DrumBeatRepo : https://www.github.com/babali42/drumbeatrepo
 
----
+
+
+
+
+
 
 <style>
 html {
