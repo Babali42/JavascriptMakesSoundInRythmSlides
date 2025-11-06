@@ -110,7 +110,7 @@ Version naïve : minuteur JS
 ## SetTimeout()
 - déclenche une fonction après un certain temps
 
-```javascript
+```typescript  {monaco-run} {autorun:false}
 function loop(){
     console.log("Case suivante");
 }
@@ -118,12 +118,6 @@ function loop(){
 console.log("Début");
 setTimeout(loop, 85);
 console.log("Fin");
-```
-
-```
-> Début
-> Fin
-> Case suivante
 ```
 
 <!--
@@ -137,20 +131,13 @@ Version naïve : minuteur JS
 ## SetTimeout() récursif
 - déclenche une fonction à interval de temps régulier
 
-```javascript
+```typescript  {monaco-run} {autorun:false}
 function loop(){
     console.log("Case suivante");
     setTimeout(loop, 85);
 }
 
 loop()
-```
-
-```
-> Case suivante
-> Case suivante
-> Case suivante
-> ...
 ```
 <!--
 J'ai fouillé dans la documentation JS et j'ai vu qu'il y a une fonction pour déclencher un évènement après un temps précis
@@ -166,21 +153,21 @@ De toute façon le récursif ça ne me fait pas peur je fonce
 # Construction d'une boite à rythme
 Version naïve : minuteur JS
 
-```ts
+```ts {monaco-run} {autorun:false}
 const pattern = ["X"," "," "," ","X"," "," "," ","X"," "," "," ","X"," "," "," "];
-const audio = new Audio("kick.wav");
+const audio = new Audio('https://codeskulptor-demos.commondatastorage.googleapis.com/GalaxyInvaders/explosion%2001.wav');
 
-const stepTime = 85;
-let step = 0;
+const stepTime = 85; let step = 0;
 
 function loop(): void {
-  if (pattern[step] === "X") {
-    audio.currentTime = 0;
-    audio.play();
-  }
+    if (pattern[step] === "X") {
+        audio.currentTime = 0;
+        audio.play();
+        console.log(step);
+    }
 
-  step = (step + 1) % pattern.length;
-  setTimeout(loop, stepTime);
+    step = (step + 1) // % pattern.length;
+    setTimeout(loop, stepTime);
 }
 
 loop();
@@ -210,19 +197,19 @@ gantt
     dateFormat  HH:mm:ss
     axisFormat  %S.%L s
 
-    section Sans surcharge processeur
+    section .
     1 : vert, v1, 00:00:00, 0.000s
-    setTimeout :active, des1, after v1, 0.085s
+    . :active, des1, after v1, 0.085s
     2 : vert, v2, after des1, 0.000s
-    setTimeout :des2, after des1, 0.085s
+    . :des2, after des1, 0.085s
     3 : vert, v3, after des2, 0.000s
-    setTimeout :des3, after des2, 0.085s
+    . :des3, after des2, 0.085s
     4 : vert, v4, after des3, 0.000s
 
-    section Avec surcharge processeur
-    setTimeout :active, des4, 00:00:00, 0.085s
-    setTimeout retardé :crit, des5, after des4, 0.105s
-    setTimeout :crit, des6, after des5, 0.085s
+    section .
+    . :active, des4, 00:00:00, 0.085s
+    . :crit, des5, after des4, 0.105s
+    . :des6, after des5, 0.085s
 ```
 
 ## Inconvénients
@@ -253,7 +240,7 @@ Version synchronisée : WebAudioAPI
 
 ---
 
-# Construction d'une boite à rythme précise
+# Construction d'une boite à rythme
 ```mermaid
 sequenceDiagram
     autonumber
@@ -276,7 +263,7 @@ sequenceDiagram
 
 ---
 
-# Construction d'une boite à rythme précise
+# Construction d'une boite à rythme
 Code
 
 ---
@@ -319,11 +306,13 @@ _
 
 ---
 
-# Liens
+# Merci !
+
+--> **Baptiste Lyet** - Développeur .NET/Angular @Sogilis
+
 </> DrumBeatRepo : https://www.github.com/babali42/drumbeatrepo
 
 <img src="./images/qrcode.png" class="max-w-50 h-auto rounded-lg shadow-lg object-contain" />
-
 
 
 
