@@ -13,9 +13,12 @@ import FooterImage from './components/FooterImage.vue'
 
 **Baptiste Lyet**
 
-coaché par **Sylvain Coudert**
-
 <FooterImage />
+---
+
+# Plan
+
+
 ---
 
 # Définitions
@@ -43,10 +46,6 @@ https://fr.wikipedia.org/wiki/Musique
 -->
 <Footer />
 ---
-layout: image-right
-image: 8beat_example.jpg
-backgroundSize: 50%
----
 
 # Définitions
 Musique et rythme
@@ -54,6 +53,14 @@ Musique et rythme
 ### Qu'est ce que le rythme ?
 
 Le rythme en musique est l'organisation dans le temps des événements musicaux.
+
+<div class="flex flex-col items-center">
+  <div class="flex justify-center gap-12">
+    <img src="./images/comment-lire-partition-batterie.png" class="max-w-60 h-auto rounded-lg shadow-lg object-contain" />
+    <img src="./images/score.png" class="max-w-100 h-auto rounded-lg shadow-lg object-contain" />
+  </div>
+  <p class="mt-4 text-gray-500 text-sm">Comment lire une partition de batterie</p>
+</div>
 
 <Footer />
 ---
@@ -105,6 +112,7 @@ Problématique
 
 ### Vitesse de lecture
 - n ms pour passer d'une case à l'autre
+- https://toolstud.io/music/bpm.php?bpm=176&bpm_unit=4%2F4&base=16
 - avec n > 75ms et n < 150ms
 
 <Footer />
