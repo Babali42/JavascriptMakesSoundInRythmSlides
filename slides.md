@@ -93,14 +93,23 @@ Problématique
 
 ### Schéma rythmique
 ```json
-"hihat" : [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-"snare" : [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-"kick"  : ["X", " ", " ", " ", "X", " ", " ", " ", "X", " ", " ", " ", "X", " ", " ", " "]
+"charleston"   : [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+"caisseClaire" : [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+"grosseCaisse" : ["X", " ", " ", " ", "X", " ", " ", " ", "X", " ", " ", " ", "X", " ", " ", " "]
 ```
+
+<img src="./images/score.png" class="max-w-100 h-auto rounded-lg shadow-lg object-contain" />
+
+---
+
+# Construction d'une boite à rythme
+Problématique
 
 ### Vitesse de lecture
 - 85 ms pour passer d'une case à l'autre avec un tempo de 176
 - https://toolstud.io/music/bpm.php?bpm=176&bpm_unit=4%2F4&base=16
+
+<img src="./images/score.png" class="max-w-100 h-auto rounded-lg shadow-lg object-contain" />
 
 ---
 
@@ -111,12 +120,12 @@ Version naïve : minuteur JS
 - déclenche une fonction après un certain temps
 
 ```typescript  {monaco-run} {autorun:false}
-function loop(){
+function scheduler(){
     console.log("Case suivante");
 }
 
 console.log("Début");
-setTimeout(loop, 85);
+setTimeout(scheduler, 85);
 console.log("Fin");
 ```
 
@@ -132,12 +141,12 @@ Version naïve : minuteur JS
 - déclenche une fonction à interval de temps régulier
 
 ```typescript  {monaco-run} {autorun:false}
-function loop(){
+function scheduler(){
     console.log("Case suivante");
-    setTimeout(loop, 85);
+    setTimeout(scheduler, 85);
 }
 
-loop()
+scheduler()
 ```
 <!--
 J'ai fouillé dans la documentation JS et j'ai vu qu'il y a une fonction pour déclencher un évènement après un temps précis
@@ -157,9 +166,9 @@ Version naïve : minuteur JS
 const pattern = ["X"," "," "," ","X"," "," "," ","X"," "," "," ","X"," "," "," "];
 const audio = new Audio('https://codeskulptor-demos.commondatastorage.googleapis.com/GalaxyInvaders/explosion%2001.wav');
 
-const stepTime = 85; let step = 0;
+let step = 0;
 
-function loop(): void {
+function scheduler(): void {
     if (pattern[step] === "X") {
         audio.currentTime = 0;
         audio.play();
@@ -167,25 +176,21 @@ function loop(): void {
     }
 
     step = (step + 1) // % pattern.length;
-    setTimeout(loop, stepTime);
+    setTimeout(scheduler, 85); //85 ms
 }
 
-loop();
+scheduler();
 ```
 
 ---
 
 # Construction d'une boite à rythme
-Version naïve : minuteur JS - Démo
 
-<SlidevVideo v-click autoplay controls>
-  <!-- Anything that can go in an HTML video element. -->
-  <source src="/videos/lag.mov" type="video/mp4" />
-  <p>
-    Your browser does not support videos. You may download it
-    <a href="/myMovie.mp4">here</a>.
-  </p>
-</SlidevVideo>
+<div class="w-full max-w-3xl mx-auto">
+  <SlidevVideo controls class="w-full rounded-xl">
+    <source src="/videos/lag.mov" type="video/mp4" />
+  </SlidevVideo>
+</div>
 
 ---
 
@@ -252,9 +257,9 @@ sequenceDiagram
     JS->>Scheduler: Tick (every 25ms)
     Scheduler->>Audio: Check nextNoteTime < currentTime + lookahead
     alt Time to schedule
-        Scheduler->>Audio: scheduleNote(currentNote, nextNoteTime)
-        Audio->>Speaker: Play click at nextNoteTime
-        Scheduler->>Scheduler: nextNoteTime += beatDuration currentNote+= 1
+        Scheduler->>Audio: scheduleNote(step, nextNoteTime)
+        Audio->>Speaker: Play sample at nextNoteTime
+        Scheduler->>Scheduler: nextNoteTime += 0.085,    step+= 1
     else Not yet
         Scheduler-->>JS: Wait for next tick
     end
@@ -264,21 +269,58 @@ sequenceDiagram
 ---
 
 # Construction d'une boite à rythme
-Code
+Version synchronisée : WebAudioAPI
+
+<div style="max-height: 350px; overflow:auto;">
+
+```ts {monaco-run autorun=false}
+const pattern = ["X"," "," "," ","X"," "," "," ","X"," "," "," ","X"," "," "," "];
+const lookahead = 0.100; // 100ms
+
+const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+let kickBuffer: AudioBuffer, nextNoteTime = audioContext.currentTime, step = 0;
+
+fetch("/kick.wav")
+    .then(res => res.arrayBuffer())
+    .then(data => audioContext.decodeAudioData(data))
+    .then(buffer => { kickBuffer = buffer; });
+
+function scheduler(): void {
+    while (nextNoteTime < audioContext.currentTime + lookahead) {
+        scheduleNote(step, nextNoteTime);
+        setNextNote();
+    }
+    setTimeout(scheduler, 25); // 25ms
+}
+
+function scheduleNote(step: number, time: number): void {
+  if (pattern[step] === "X" && kickBuffer) {
+    const source = audioContext.createBufferSource();
+    source.buffer = kickBuffer;
+    source.connect(audioContext.destination);
+    source.start(time);
+  }
+}
+
+function setNextNote(): void {
+  nextNoteTime += 0.085; //85 ms
+  step = (step + 1) % pattern.length;
+}
+
+scheduler();
+```
+
+</div>
 
 ---
 
 # Construction d'une boite à rythme
-Version synchronisée : WebAudioAPI - Démo
 
-<SlidevVideo v-click autoplay controls>
-  <!-- Anything that can go in an HTML video element. -->
-  <source src="/videos/good.mov" type="video/mp4" />
-  <p>
-    Your browser does not support videos. You may download it
-    <a href="/myMovie.mp4">here</a>.
-  </p>
-</SlidevVideo>
+<div class="w-full max-w-3xl mx-auto">
+  <SlidevVideo controls class="w-full rounded-xl">
+    <source src="/videos/good.mov" type="video/mp4" />
+  </SlidevVideo>
+</div>
 
 ---
 
