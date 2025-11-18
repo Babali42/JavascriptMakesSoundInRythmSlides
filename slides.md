@@ -37,9 +37,6 @@ Musique et rythme
 
 ### Qu'est ce que la musique ?
 
-Combiner sons et silences au cours du temps.
-
-
 <v-click>
 
 - **rythme**
@@ -62,15 +59,17 @@ Musique et rythme
 
 ### Qu'est ce que le rythme ?
 
-Le rythme en musique est l'organisation dans le temps des événements musicaux.
+<v-click>
 
 <div class="flex flex-col items-center">
   <div class="flex justify-center gap-12">
     <img src="./images/comment-lire-partition-batterie.png" class="max-w-60 h-auto rounded-lg shadow-lg object-contain" />
-    <img src="./images/score.png" class="max-w-100 h-auto rounded-lg shadow-lg object-contain" />
+    <img src="./images/scorepunk.png" class="max-w-100 h-auto rounded-lg shadow-lg object-contain" />
   </div>
   <p class="mt-4 text-gray-500 text-sm">Comment lire une partition de batterie</p>
 </div>
+
+</v-click>
 
 ---
 
@@ -237,12 +236,17 @@ Jitter → fluctuations aléatoires d’un tick à l’autre (court terme).
 
 💡 Au lieu de déclencher les sons au dernier moment, on planifie les événements à l’avance.
 
+
+
 ## Synchronisation JS & WebAudioAPI
-- horloge JavaScript
-  - setTimeout()
-- hardware audio
-  - WebAudioAPI
-  - context.currentTime()
+
+```ts {monaco-run} {autorun:false}
+var context = new AudioContext();
+console.log(context.currentTime);
+
+setTimeout(() => console.log(context.currentTime), 500);
+
+```
 
 ---
 
@@ -353,7 +357,7 @@ _
 
 ---
 
-# Merci pour votre attention
+# Merci !
 
 --> **Baptiste Lyet** - Développeur .NET/Angular @Sogilis
 
