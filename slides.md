@@ -7,7 +7,8 @@ themeConfig:
   github: babali42/drumbeatrepo
 ---
 
-# Javascript fait du bruit (mais en rythme)
+# Javascript fait du bruit
+(mais en rythme)
 
 ## Tremplin de Snowcamp 2026 : UX & Frontend
 
@@ -39,10 +40,11 @@ Musique et rythme
 
 <v-click>
 
-- **rythme**
+Caractéristiques :
 - hauteur
-- nuances
+- nuance
 - timbre
+- **rythme**
 
 </v-click>
 
@@ -251,6 +253,11 @@ setTimeout(() => console.log(context.currentTime), 500);
 ---
 
 # Construction d'une boite à rythme - synchronisée
+
+<img src="./images/schema_v1.png" class="max-h-100 h-auto rounded-lg shadow-lg object-contain" />
+---
+
+# Construction d'une boite à rythme - synchronisée
 ```mermaid
 sequenceDiagram
     autonumber
@@ -271,11 +278,6 @@ sequenceDiagram
     JS->>Scheduler: Next Tick
 ```
 
----
-
-# Construction d'une boite à rythme - synchronisée
-
-<img src="./images/schema_v1.png" class="max-h-100 h-auto rounded-lg shadow-lg object-contain" />
 ---
 
 # Construction d'une boite à rythme - synchronisée
@@ -352,6 +354,7 @@ _
 ### Aller plus loin
 - UI - **requestAnimationFrame()**
 - Changement de tempo et **TimeStretch**
+- Synchroniser plusieurs séquenceurs ?
 
 </v-click>
 
@@ -362,10 +365,9 @@ _
 --> **Baptiste Lyet** - Développeur .NET/Angular @Sogilis
 
 </> DrumBeatRepo : https://www.github.com/babali42/drumbeatrepo
-
 <img src="./images/qrcode.png" class="max-w-50 h-auto rounded-lg shadow-lg object-contain" />
 
-
+Source : A tales of two clocks - Chris Wilson - 2013
 
 
 
