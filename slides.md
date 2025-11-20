@@ -318,6 +318,13 @@ scheduler();
 
 
 <!--
+**fetch()
+Web Audio API (decodeAudioData)
+Using it in a <canvas>
+Reading metadata**
+
+Avec ce second exemple j'ai besoin de décoder du coup j'ai eu un problème de CORS
+
 J'ai utilisé CorsProxy pour pouvoir fetch le .wav et contourner les restrictions de mon navigateur web
 
 J'utilise la fonction audio buffer qui me permet de stocker en mémoire le sample, échantillon
