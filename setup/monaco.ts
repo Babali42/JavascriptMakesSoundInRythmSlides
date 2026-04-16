@@ -5,8 +5,8 @@ export default defineMonacoSetup((monaco) => {
 
     return {
         editorOptions: {
-            fontSize: 20,
-            lineHeight: 36,   // Monaco interprets this as px when > 8
+            fontSize: 18,
+            lineHeight: 26,   // Monaco interprets this as px when > 8
             lineNumbers: 'on',
             scrollbar: {
                 vertical: 'hidden',         // hide scrollbar if you want no-scroll feel

@@ -5,7 +5,6 @@ lineNumbers: true
 themeConfig:
   title: Javascript fait du bruit... ...mais en rythme
   github: babali42/drumbeatrepo
-aspectRatio: 4/3
 ---
 
 # Javascript fait du bruit
@@ -153,7 +152,7 @@ Problématique
 
 ---
 
-# Construction : boîte à rythme naïve
+# Construction d'une boîte à rythme naïve
 _
 ## SetTimeout()
 - Déclenche une fonction après un certain temps
@@ -170,8 +169,7 @@ console.log("Fin");
 
 ---
 
-# Construction : boîte à rythme naïve
-_
+# Construction d'une boîte à rythme naïve
 ## SetTimeout() récursif
 - Déclenche une fonction à intervalles de temps réguliers
 
@@ -189,9 +187,9 @@ De toute façon le récursif ça ne me fait pas peur je fonce
 
 ---
 
-# Construction : boîte à rythme naïve
+# Construction d'une boîte à rythme naïve
 
-<div style="max-height: 575px; overflow:auto;">
+<div style="max-height: 400px; overflow:auto;">
 
 ```ts {monaco-run} {autorun:false}
 const pattern = ["X"," "," "," ","X"," "," "," ","X"," "," "," ","X"," "," "," "];
@@ -217,7 +215,7 @@ scheduler();
 
 ---
 
-# Construction : boîte à rythme naïve
+# Construction d'une boîte à rythme naïve
 
 <div class="w-full max-w-3xl mx-auto">
   <SlidevVideo controls class="w-full rounded-xl">
@@ -227,7 +225,7 @@ scheduler();
 
 ---
 
-# Construction : boîte à rythme naïve
+# Construction d'une boîte à rythme naïve
 
 <img src="./images/setTimeoutSchema.png" class="h-auto object-contain" />
 
@@ -245,7 +243,7 @@ Dérive d’horloge → décalage progressif dans le temps (long terme).
 Jitter → fluctuations aléatoires d’un tick à l’autre (court terme).
 -->
 
-# Construction : boîte à rythme synchronisée
+# Construction d'une boîte à rythme synchronisée
 
 💡 Au lieu de déclencher les sons au dernier moment, on planifie les événements à l’avance.
 
@@ -263,7 +261,7 @@ setTimeout(() => console.log(context.currentTime), 500);
 
 ---
 
-# Construction : boîte à rythme synchronisée
+# Construction d'une boîte à rythme synchronisée
 
 <img src="./images/schema_v1.png" class="max-h-100 h-auto rounded-lg shadow-lg object-contain" />
 ---
@@ -291,9 +289,9 @@ sequenceDiagram
 
 ---
 
-# Construction : boîte à rythme synchronisée
+# Construction d'une boîte à rythme synchronisée
 
-<div style="max-height: 575px; overflow:auto;">
+<div style="max-height: 400px; overflow:auto;">
 
 ```ts {monaco-run} {autorun:false}
 const pattern = ["X"," "," "," ","X"," "," "," ","X"," "," "," ","X"," "," "," "];
@@ -349,7 +347,7 @@ J'utilise la fonction audio buffer qui me permet de stocker en mémoire le sampl
 -->
 ---
 
-# Construction : boîte à rythme synchronisée
+# Construction d'une boîte à rythme synchronisée
 
 <div class="w-full max-w-3xl mx-auto">
   <SlidevVideo controls class="w-full rounded-xl">
