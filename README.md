@@ -1,8 +1,9 @@
 # Javascript fait du bruit mais en rythme
 
-Comment créer une boîte à rythme précise en javascript ?
+## Lancer en local (avec node 20)
+npm run dev
 
-Illustré autour de www.drumbeatrepo.com
+## Slides exportées
 
 ![0.png](export/0.png)
 ![1.png](export/1.png)
