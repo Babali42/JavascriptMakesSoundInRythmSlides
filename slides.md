@@ -412,10 +412,20 @@ Note : c'est dur à faire à la fois pour les musiciens et musiciennes et pour l
 
 # Merci !
 
---> **Baptiste Lyet** - Développeur .NET/Angular 6/7 ans d'XP
+--> **Baptiste Lyet** - Développeur .NET/Angular - 6/7 ans d'XP
 
 </> DrumBeatRepo : https://www.github.com/Babali42/drumbeatrepo
-<img src="./images/qrcode.png" class="max-w-50 h-auto rounded-lg shadow-lg object-contain" />
+<div style="display: flex; gap: 100px; align-items: center; justify-content: center;">
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <img src="./images/qrcode.png" class="max-w-50 h-auto rounded-lg shadow-lg object-contain" />
+    <div>Slides</div>
+  </div>
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <img src="./images/feedback.png" class="max-w-50 h-auto rounded-lg shadow-lg object-contain" />
+    <div>Feedback</div>
+  </div>
+</div>
+
 
 Source : A tales of two clocks - Chris Wilson - 2013
 
