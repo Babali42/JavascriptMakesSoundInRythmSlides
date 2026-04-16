@@ -191,7 +191,7 @@ De toute façon le récursif ça ne me fait pas peur je fonce
 
 # Construction : boîte à rythme naïve
 
-<div style="max-height: 600px; overflow:auto;">
+<div style="max-height: 575px; overflow:auto;">
 
 ```ts {monaco-run} {autorun:false}
 const pattern = ["X"," "," "," ","X"," "," "," ","X"," "," "," ","X"," "," "," "];
@@ -293,7 +293,7 @@ sequenceDiagram
 
 # Construction : boîte à rythme synchronisée
 
-<div style="max-height: 550px; overflow:auto;">
+<div style="max-height: 575px; overflow:auto;">
 
 ```ts {monaco-run} {autorun:false}
 const pattern = ["X"," "," "," ","X"," "," "," ","X"," "," "," ","X"," "," "," "];
