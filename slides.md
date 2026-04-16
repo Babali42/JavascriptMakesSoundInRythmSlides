@@ -20,6 +20,27 @@ Aujourd'hui on va parler de javascript et de rythme
 
 ---
 
+# Merci aux sponsors !
+
+<div style="display:flex;flex-wrap:wrap;gap:8px;">
+  <span style="padding:2px 10px;border-radius:999px;background:#222;color:white;font-size:12px;">Esker</span>
+  <span style="padding:2px 10px;border-radius:999px;background:#222;color:white;font-size:12px;">Siemens</span>
+  <span style="padding:2px 10px;border-radius:999px;background:#222;color:white;font-size:12px;">Métropole de Lyon</span>
+  <span style="padding:2px 10px;border-radius:999px;background:#222;color:white;font-size:12px;">CBTW</span>
+  <span style="padding:2px 10px;border-radius:999px;background:#222;color:white;font-size:12px;">Ville de Lyon</span>
+  <span style="padding:2px 10px;border-radius:999px;background:#222;color:white;font-size:12px;">Worldline</span>
+  <span style="padding:2px 10px;border-radius:999px;background:#222;color:white;font-size:12px;">Energy Pool</span>
+  <span style="padding:2px 10px;border-radius:999px;background:#222;color:white;font-size:12px;">Clever Cloud</span>
+  <span style="padding:2px 10px;border-radius:999px;background:#222;color:white;font-size:12px;">Exotec</span>
+  <span style="padding:2px 10px;border-radius:999px;background:#222;color:white;font-size:12px;">G2S</span>
+  <span style="padding:2px 10px;border-radius:999px;background:#222;color:white;font-size:12px;">HIIT Consulting</span>
+  <span style="padding:2px 10px;border-radius:999px;background:#222;color:white;font-size:12px;">Hack Your Job</span>
+  <span style="padding:2px 10px;border-radius:999px;background:#222;color:white;font-size:12px;">Filigran</span>
+  <span style="padding:2px 10px;border-radius:999px;background:#222;color:white;font-size:12px;">ADULLACT</span>
+</div>
+
+---
+
 # Plan
 
 - Présentation de DrumBeatRepo
@@ -129,9 +150,9 @@ Problématique
 
 ### Schéma rythmique
 ```json
-"charleston"   : [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-"caisseClaire" : [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-"grosseCaisse" : ["X", " ", " ", " ", "X", " ", " ", " ", "X", " ", " ", " ", "X", " ", " ", " "]
+"charleston"   : [" ", "", "", "", " ", "", "", "", " ", "", "", "", " ", "", "", ""],
+"caisseClaire" : [" ", "", "", "", " ", "", "", "", " ", "", "", "", " ", "", "", ""],
+"grosseCaisse" : ["X", "", "", "", "X", "", "", "", "X", "", "", "", "X", "", "", ""]
 ```
 
 <img src="./images/score.png" class="max-w-100 h-auto rounded-lg shadow-lg object-contain" />
@@ -154,7 +175,6 @@ Problématique
 ---
 
 # Construction d'une boîte à rythme naïve
-_
 ## SetTimeout()
 - Déclenche une fonction après un certain temps
 
@@ -193,15 +213,15 @@ De toute façon le récursif ça ne me fait pas peur je fonce
 <div style="max-height: 400px; overflow:auto;">
 
 ```ts {monaco-run} {autorun:false}
-const pattern = ["X"," "," "," ","X"," "," "," ","X"," "," "," ","X"," "," "," "];
-const audio = new Audio('https://soundcamp.org/sounds/381/kick/B/acoustic-kick-drum-one-shot-b-key-201-ywK.wav');
+const pattern = ["X","","","","X","","","","X","","","","X","","",""];
+const audioSample = new Audio('sounds/kick.wav');
 
 let index = 0;
 
 function scheduler(): void {
     if (pattern[index] === "X") {
-        audio.currentTime = 0;
-        audio.play();
+        audioSample.currentTime = 0;
+        audioSample.play();
         console.log(index);
     }
 
@@ -219,7 +239,7 @@ scheduler();
 # Construction d'une boîte à rythme naïve
 
 <div class="w-full max-w-3xl mx-auto">
-  <SlidevVideo controls class="w-full rounded-xl">
+  <SlidevVideo controls class="w-[90%] mx-auto rounded-xl">
     <source src="/videos/lag.mov" type="video/mp4" />
   </SlidevVideo>
 </div>
@@ -253,10 +273,10 @@ Jitter → fluctuations aléatoires d’un tick à l’autre (court terme).
 ## Synchronisation JS & WebAudioAPI
 
 ```ts {monaco-run} {autorun:false}
-var context = new AudioContext();
-console.log(context.currentTime);
+var audioContext = new AudioContext();
+console.log(audioContext.currentTime);
 
-setTimeout(() => console.log(context.currentTime), 500);
+setTimeout(() => console.log(audioContext.currentTime), 500);
 
 ```
 
@@ -295,11 +315,13 @@ sequenceDiagram
 <div style="max-height: 400px; overflow:auto;">
 
 ```ts {monaco-run} {autorun:false}
-const pattern = ["X"," "," "," ","X"," "," "," ","X"," "," "," ","X"," "," "," "];
+const pattern = ["X","","","","X","","","","X","","","","X","","",""];
 const lookahead = 0.100; // 100ms
 
-const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-let kickBuffer: AudioBuffer, nextStepTime = audioContext.currentTime, index = 0;
+var audioContext = new AudioContext();
+let kickBuffer: AudioBuffer;
+let nextStepTime = audioContext.currentTime;
+let index = 0;
 
 fetch("/sounds/kick.wav")
         .then(r => r.arrayBuffer())
@@ -352,7 +374,7 @@ J'utilise la fonction audio buffer qui me permet de stocker en mémoire le sampl
 # Construction d'une boîte à rythme synchronisée
 
 <div class="w-full max-w-3xl mx-auto">
-  <SlidevVideo controls class="w-full rounded-xl">
+  <SlidevVideo controls class="w-[90%] mx-auto rounded-xl">
     <source src="/videos/good.mov" type="video/mp4" />
   </SlidevVideo>
 </div>
@@ -360,7 +382,6 @@ J'utilise la fonction audio buffer qui me permet de stocker en mémoire le sampl
 ---
 
 # Conclusion
-_
 
 ### Notions
 - Minuteur / timer
@@ -393,7 +414,7 @@ Note : c'est dur à faire à la fois pour les musiciens et musiciennes et pour l
 
 --> **Baptiste Lyet** - Développeur .NET/Angular 6/7 ans d'XP
 
-</> DrumBeatRepo : https://www.github.com/babali42/drumbeatrepo
+</> DrumBeatRepo : https://www.github.com/Babali42/drumbeatrepo
 <img src="./images/qrcode.png" class="max-w-50 h-auto rounded-lg shadow-lg object-contain" />
 
 Source : A tales of two clocks - Chris Wilson - 2013
