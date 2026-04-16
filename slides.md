@@ -113,6 +113,7 @@ Séquenceurs et boîte à rythme
 
 <img src="./TR08.avif" class="max-w-100 h-auto rounded-lg shadow-lg object-contain" />
 
+💡 Il y a aussi des séquenceurs dans les logiciels de vidéos et les jeux vidéos
 <!--
 Machine ou logiciel qui génère des boucles de batterie/percussions répétitives et utilise en interne un **séquenceur**
 
@@ -300,10 +301,13 @@ const lookahead = 0.100; // 100ms
 const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
 let kickBuffer: AudioBuffer, nextStepTime = audioContext.currentTime, index = 0;
 
-fetch("https://corsproxy.io/?" + encodeURIComponent("https://soundcamp.org/sounds/381/kick/B/acoustic-kick-drum-one-shot-b-key-201-ywK.wav"))
-    .then(r => r.arrayBuffer())
-    .then(buf => audioContext.decodeAudioData(buf))
-    .then(buffer => { kickBuffer = buffer });
+fetch("/sounds/kick.wav")
+        .then(r => r.arrayBuffer())
+        .then(buf => audioContext.decodeAudioData(buf))
+        .then(buffer => {
+          kickBuffer = buffer;
+          scheduler();
+        });
 
 function scheduler() {
     while (nextStepTime < audioContext.currentTime + lookahead) {
@@ -314,7 +318,7 @@ function scheduler() {
 }
 
 function scheduleStep(index: number, time: number) {
-  if (pattern[index] === "X" && kickBuffer) {
+  if (pattern[index] === "X") {
     const source = audioContext.createBufferSource();
     source.buffer = kickBuffer;
     source.connect(audioContext.destination);
@@ -326,8 +330,6 @@ function setNextStep() {
   nextStepTime += 0.085; //85 ms
   index = (index + 1);// % pattern.length;
 }
-
-scheduler();
 ```
 
 </div>
