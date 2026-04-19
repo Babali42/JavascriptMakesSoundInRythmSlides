@@ -35,9 +35,14 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
+      - name: Add kick sound file for sync drum machine example
+        run: |
+          mkdir -p dist/sounds
+          cp public/sounds/kick.wav dist/sounds/kick.wav
+
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: public
+          path: dist
 
   deploy:
     permissions:
